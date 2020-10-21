@@ -1,99 +1,123 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
     const questionUrl = "http://localhost:3000/questions/"
-    // const questionArray = [158,159, 160, 161]
-    // let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
+    let txtContent = document.querySelector("#points").textContent 
+    let pointsSpan = parseInt(txtContent)
+    pointsSpan = 0
+
+    // console.log(typeof txtContent)
+    // console.log(typeof pointsSpan)
+    
 /* get and render categories */
 const clickStartGame = () => {
     document.addEventListener('click', (e) => {
         if(e.target.matches(("#start-game"))){
-            const questionArray = [162,163, 164, 165, 166, 167, 168]
+            const questionArray = [42, 43, 44, 45, 46, 47, 48, 49, 50];
             let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
-            console.log(e.target)
+
             fetch(questionUrl + questionId)
-            .then(response => response.json())
-            .then(question => console.log(question)
-            )
-        }
-        
-        // console.log(e.target)
-    
+                .then(response => response.json())
+                .then(question => displayQuestion(question))
+
+            const displayCorrect = () => {
+                // set time out
+                const correctContainer = document.querySelector(".container")
+                correctContainer.textContent = "Correct!"
+                correctContainer.style.display = "block"
+
+                // const pointsSpan = document.querySelector("#points")
+                pointsSpan = + 5
+
+            }
+
+            const displayIncorrect = () => {
+                // set time out
+                const incorrectContainer = document.querySelector(".container")
+                incorrectContainer.textContent = "INCORRECT!"
+                incorrectContainer.style.display = "block"
+
+                // const pointsSpan = document.querySelector("#points")
+                pointsSpan = + 0
+
+            }
+
+            const nextQuestion = () => {
+            // need a way to indicate next
+                // const nextButton = document.createElement("button")
+                // nextButton.textContent = "Next Question"
+                // const nextClass = document.querySelector("#next")
+                // nextClass.append(nextButton)
+
+                const questionArray = [42, 43, 44, 45, 46, 47, 48, 49, 50];
+                let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
+                
+            // clear out the HTML in the question and answer panels
+                const answerPanel = document.querySelector("#answer-panel")
+                answerPanel.innerHTML = ''
+
+                const questionPanel = document.querySelector("#question-panel")
+                questionPanel.innerHTML = ''
+
+                // nextClass.innerHTML = ''
+
+
+                
+            fetch(questionUrl + questionId)
+                .then(response => response.json())
+                .then(question => displayQuestion(question))
+            }
+
+
+            const answerClicker = (question) => {
+                const answerPanel = document.querySelector("#answer-panel")
+                answerPanel.addEventListener("click", e => {
+                    const button = e.target
+                    if (button.textContent == question.answer){
+                        displayCorrect()                       
+                        setTimeout(nextQuestion, 2000) //this method will fetch a new question
+                    } else {
+                        displayIncorrect()
+                    }
+                })
+            }
+
+            //this method will create buttons for each answer 
+            const displayAnswers = (question) => {
+                const answerPanel = document.querySelector("#answer-panel")
+
+                let totalAnswers = question.incorrect_answers
+                totalAnswers.push(question.answer)
+                    // TO DO: implement shuffling in total answers
+
+                totalAnswers.forEach(answer => {
+                    const answerButton = document.createElement("button") //for each string element in array, create a new button
+                    answerButton.textContent = answer// the text content should be an answer
+                    answerButton.dataset.id = question.id
+                    answerPanel.append(answerButton)  //that will be appended to the answer panel
+                })
+
+                answerClicker(question)
+            }
+
+            const displayQuestion = (question) => {
+                // pointsSpan = 0
+                // console.log(typeof pointsSpan)
+
+                const questionPanel = document.querySelector("#question-panel")
+                questionPanel.innerHTML = `
+                <h2>${question.text}</h2>
+                `
+                displayAnswers(question)
+                
+            }
+
+
+        }    
     
     })
 }
-    
-
-    // const renderQuestions = questions => {
-    //     // console.log(questions[3].text)
-    //     for (const question of questions){
-    //         // renderText(question)
-    //     const questionPanel = document.querySelector("#question-panel")
-    //     const h4 = document.createElement('h4')
-    //     h4.dataset.questionId = `${question.id}`
-    //     h4.textContent = `${question.text}`
-    //     questionPanel.append(h4)
-    //     }
-    // }
-
-    // const clickText = () => {
-    //     document.addEventListener('click', (e) => {
-    //         if(e.target.matches('h4')){
-    //             const questionId = e.target.dataset.questionId
-    //             fetch(questionUrl + questionId)
-    //             .then(response => response.json())
-    //             .then(text => console.log(text))
-    //         }
-    //     // const textInfo = (text) => {
-            
-    //     // }
-
-
-    //     })
-    // }
-
- 
-
-    // const renderText = question => {
-    //     const questionPanel = document.querySelector("#question-panel")
-    //     // console.log(questionPanel)
-    //     const h2 = document.createElement('h2')
-    //     h2.textContent = `${question.text}`
-    //     console.log(h2)
-
-        // const questionDiv = document.createElement("span")
-        // questionDiv.dataset.id = `${question.id}`
-        // questionDiv.textContent = `${question.title}`
-        // console.log(question)
-        // categoryBar.append(questionDiv)
-    // }
-
-/* User should click on a category. On click, Question and answers will pop up */
-    // const spanClick = () => {
-    //     document.addEventListener("click", e => {
-    //         if (e.target.matches("span")){
-    //             const categoryId = e.target.dataset.id
-    //             console.log(e)
-    //             fetch(categoryUrl + categoryId)
-    //                 .then(response => response.json())
-    //                 .then(getQuestions)
-    //         }
-    //     })
-    // }
-    
-/* get and render questions */
-    // const getQuestions = () => {
-    //     fetch(questionUrl)
-    //         .then(response => response.json())
-    //         .then(questions => console.log(questions))
-    // }
-
-    
-
-
-/* User can click next button to go on to the next question */
 
 /* User should be able to see their score */
 
-   
+
 clickStartGame()
 })
