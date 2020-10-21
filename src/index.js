@@ -1,44 +1,55 @@
 document.addEventListener("DOMContentLoaded", () => {
     
     const questionUrl = "http://localhost:3000/questions/"
-
+    // const questionArray = [158,159, 160, 161]
+    // let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
 /* get and render categories */
-    const getQuestions = () => {
-        fetch(questionUrl)
+const clickStartGame = () => {
+    document.addEventListener('click', (e) => {
+        if(e.target.matches(("#start-game"))){
+            const questionArray = [162,163, 164, 165, 166, 167, 168]
+            let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
+            console.log(e.target)
+            fetch(questionUrl + questionId)
             .then(response => response.json())
-            .then(questions => {
-                renderQuestions(questions)
-            })
-    }
-
-    const renderQuestions = questions => {
-        // console.log(questions[3].text)
-        for (const question of questions){
-            // renderText(question)
-        const questionPanel = document.querySelector("#question-panel")
-        const h4 = document.createElement('h4')
-        h4.dataset.questionId = `${question.id}`
-        h4.textContent = `${question.text}`
-        questionPanel.append(h4)
+            .then(question => console.log(question)
+            )
         }
-    }
+        
+        // console.log(e.target)
+    
+    
+    })
+}
+    
 
-    const clickText = () => {
-        document.addEventListener('click', (e) => {
-            if(e.target.matches('h4')){
-                const questionId = e.target.dataset.questionId
-                fetch(questionUrl + questionId)
-                .then(response => response.json())
-                .then(textInfo)
-            }
-        const textInfo = () => {
+    // const renderQuestions = questions => {
+    //     // console.log(questions[3].text)
+    //     for (const question of questions){
+    //         // renderText(question)
+    //     const questionPanel = document.querySelector("#question-panel")
+    //     const h4 = document.createElement('h4')
+    //     h4.dataset.questionId = `${question.id}`
+    //     h4.textContent = `${question.text}`
+    //     questionPanel.append(h4)
+    //     }
+    // }
+
+    // const clickText = () => {
+    //     document.addEventListener('click', (e) => {
+    //         if(e.target.matches('h4')){
+    //             const questionId = e.target.dataset.questionId
+    //             fetch(questionUrl + questionId)
+    //             .then(response => response.json())
+    //             .then(text => console.log(text))
+    //         }
+    //     // const textInfo = (text) => {
             
+    //     // }
 
-        }
 
-
-        })
-    }
+    //     })
+    // }
 
  
 
@@ -76,25 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //         .then(questions => console.log(questions))
     // }
 
-    // const renderQuestions = questions => {
-    //     const questionPanel = document.querySelector("#question-panel")
-    //     for (const question of questions){
-    //         renderQuestion(question, questionPanel)
-    //     }
-    // }   
     
-    // const renderQuestion = question => {
-        
-        // for (let i )
-        
-        // const questionDisplay = document.createElement("h")
-        // questionDiv.classList.add("question-div")
-        // questionDiv.textContent = `
-        // ${question.question}
-        // `
-        // console.log(questionDiv)
-        // console.log(question)
-    // }
 
 
 /* User can click next button to go on to the next question */
@@ -102,6 +95,5 @@ document.addEventListener("DOMContentLoaded", () => {
 /* User should be able to see their score */
 
    
-    clickText()
-    getQuestions();
+clickStartGame()
 })
