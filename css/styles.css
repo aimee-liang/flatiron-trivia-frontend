@@ -1,11 +1,78 @@
-.flatiron-trivia-title{
-    margin-top: auto;
+body {
+    background-color: #8021de;
+    /* background-color: #935FA7; */
 }
 
-/* .hidden-answer{
-    display: none;
+#flatiron-trivia-title {
+    text-align: center;
+    margin: auto;
+    font-family: 'Pacifico', cursive;
+    font-size: xx-large;
+    background-color: #f2d40f;
+    border-radius: 25px;
+    box-shadow: 5px 10px;
+    block-size: 50px;
+}
+
+#creator-credit-panel {
+    background-color: #f2d40f;
+    font-family: 'Raleway', sans-serif;
+    margin-bottom: auto;
+    font-weight: bolder;
+    block-size: 40px;
+    text-align: center;
+}
+
+
+/* #container{
+    padding-top: 45px;
+    padding-bottom: 45px;
+    background-color: #ffffff;
+    opacity: 0.4;
 } */
 
-.container{
-    
+#points {
+    border-radius: 25px;
+    background: #ffffff;
+    width: 100px;
+    height: 50px;
+    opacity: 0.4;
 }
+
+#question-panel {
+    background-color: #ffffff;
+    padding-bottom: 100px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    opacity: 0.4;
+    border-radius: 30px;
+    width: 500px;
+    height: 250px;
+    margin: auto;
+}
+
+#answer-panel {
+    block-size: 40px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#start-game {
+    background-color: #d6b222;
+    font-family: 'Fredoka One', cursive;
+    font-size: x-large;
+    width: 250px;
+    height: 80px;
+    border-radius: 30px;
+}
+
+.h2-question {
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+}
+
+/* font inside question panel needs to be centered, and have a nice font */
+
+
