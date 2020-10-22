@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const questionUrl = "http://localhost:3000/questions/"
-    let txtContent = document.querySelector("#points").textContent 
-    let pointsSpan = parseInt(txtContent)
-    pointsSpan = 0
+    const gameUrl = "http://localhost:3000/games/"
+    
+    
+  
 
     // console.log(typeof txtContent)
     // console.log(typeof pointsSpan)
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const clickStartGame = () => {
     document.addEventListener('click', (e) => {
         if(e.target.matches(("#start-game"))){
-            const questionArray = [42, 43, 44, 45, 46, 47, 48, 49, 50];
+            const questionArray = [243, 244, 245, 246, 247];
             let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
 
             fetch(questionUrl + questionId)
@@ -25,8 +26,7 @@ const clickStartGame = () => {
                 correctContainer.style.display = "block"
 
                 // const pointsSpan = document.querySelector("#points")
-                pointsSpan = + 5
-
+                // pointsSpan = + 5
             }
 
             const displayIncorrect = () => {
@@ -36,8 +36,7 @@ const clickStartGame = () => {
                 incorrectContainer.style.display = "block"
 
                 // const pointsSpan = document.querySelector("#points")
-                pointsSpan = + 0
-
+                // pointsSpan = + 0
             }
 
             const nextQuestion = () => {
@@ -47,7 +46,7 @@ const clickStartGame = () => {
                 // const nextClass = document.querySelector("#next")
                 // nextClass.append(nextButton)
 
-                const questionArray = [42, 43, 44, 45, 46, 47, 48, 49, 50];
+                const questionArray = [243, 244, 245, 246, 247];
                 let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
                 
             // clear out the HTML in the question and answer panels
@@ -58,8 +57,6 @@ const clickStartGame = () => {
                 questionPanel.innerHTML = ''
 
                 // nextClass.innerHTML = ''
-
-
                 
             fetch(questionUrl + questionId)
                 .then(response => response.json())
@@ -71,21 +68,36 @@ const clickStartGame = () => {
                 const answerPanel = document.querySelector("#answer-panel")
                 answerPanel.addEventListener("click", e => {
                     const button = e.target
-                    if (button.textContent == question.answer){
+                    if (button.textContent === question.answer){
+                        const answerPanel = document.querySelector("#answer-panel")
+                answerPanel.innerHTML = ''
                         displayCorrect()                       
-                        setTimeout(nextQuestion, 2000) //this method will fetch a new question
+                        setTimeout(nextQuestion, 1000)
+                        increaseScore()
+                         //this method will fetch a new question
                     } else {
                         displayIncorrect()
+                        setTimeout(nextQuestion, 1000)
                     }
                 })
             }
-
+            function shuffle(a) {
+                var j, x, i;
+                for (i = a.length - 1; i > 0; i--) {
+                    j = Math.floor(Math.random() * (i + 1));
+                    x = a[i];
+                    a[i] = a[j];
+                    a[j] = x;
+                }
+                return a;
+            }
             //this method will create buttons for each answer 
             const displayAnswers = (question) => {
                 const answerPanel = document.querySelector("#answer-panel")
 
                 let totalAnswers = question.incorrect_answers
                 totalAnswers.push(question.answer)
+                shuffle(totalAnswers)
                     // TO DO: implement shuffling in total answers
 
                 totalAnswers.forEach(answer => {
@@ -99,9 +111,10 @@ const clickStartGame = () => {
             }
 
             const displayQuestion = (question) => {
-                // pointsSpan = 0
-                // console.log(typeof pointsSpan)
-
+                // const pointsSpan = 0
+                // // console.log(typeof pointsSpan)
+                
+            
                 const questionPanel = document.querySelector("#question-panel")
                 questionPanel.innerHTML = `
                 <h2>${question.text}</h2>
@@ -109,6 +122,32 @@ const clickStartGame = () => {
                 displayAnswers(question)
                 
             }
+            
+            const increaseScore = () => {
+                let points = document.querySelector("#points")
+                let txtContent = points.textContent
+                const pointsSpan = parseInt(txtContent)
+                console.log(pointsSpan)
+               
+                const options = {
+                    method: "PATCH",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({score: pointsSpan + 5})
+                }
+
+                fetch(gameUrl + 26, options)
+                .then(response => response.json())
+                .then(data => {
+                    points.textContent = data.score
+                    console.log(txtContent)
+                })
+
+            }
+
+            
 
 
         }    
