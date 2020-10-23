@@ -1,6 +1,5 @@
 body {
     background-color: #8021de;
-    /* background-color: #935FA7; */
 }
 
 #flatiron-trivia-title {
@@ -15,21 +14,22 @@ body {
 }
 
 #creator-credit-panel {
-    background-color: #f2d40f;
+    background-color: #FFE330;
     font-family: 'Raleway', sans-serif;
-    margin-bottom: auto;
+    margin-bottom: 5px;
+    width: 100%;
     font-weight: bolder;
     block-size: 40px;
     text-align: center;
 }
 
-
-/* #container{
-    padding-top: 45px;
-    padding-bottom: 45px;
-    background-color: #ffffff;
-    opacity: 0.4;
-} */
+.container{
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 100px;
+    block-size: 50px;
+    display: flexbox;
+}
 
 #points {
     border-radius: 25px;
@@ -53,19 +53,23 @@ body {
 }
 
 #answer-panel {
-    block-size: 40px;
+    width: 400px;
+    height: 100px;
+    padding-top: 50px;
     text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: auto;
+    flex-direction: row;
+    align-items: center;
 }
 
 #start-game {
     background-color: #d6b222;
     font-family: 'Fredoka One', cursive;
     font-size: x-large;
-    width: 250px;
-    height: 80px;
-    border-radius: 30px;
+    width: 200px;
+    height: 70px;
+    border-radius: 25px;
+    margin: auto;
 }
 
 .h2-question {
@@ -73,6 +77,15 @@ body {
     font-family: 'Varela Round', sans-serif;
 }
 
-/* font inside question panel needs to be centered, and have a nice font */
-
-
+.answerBtn {
+    width: 100px;
+    height: 80px;
+    text-align: center;
+    background-color: #d6b222;
+    border-radius: 30px;
+    margin: auto;
+    display: inline-block;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-family: 'Varela Round', sans-serif;
+}
