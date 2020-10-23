@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const questionUrl = "http://localhost:3000/questions/"
     const gameUrl = "http://localhost:3000/games/"
-    const usersUrl = "http://localhost:3000/users/"
+    const usersUrl = "http://localhost:3000/users/" //did not get to implement - stretch feature would be to save user name and points to display top scores
         
 /* get and render categories */
 const clickStartGame = () => {
     document.addEventListener('click', (e) => {
         if(e.target.matches(("#start-game"))){
-            const questionArray = [51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79];
+            const questionArray = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89 ,90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 
+            110, 111, 112, 113, 114, 115, 116, 117, 118];
             let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
 
             fetch(questionUrl + questionId)
@@ -18,18 +19,22 @@ const clickStartGame = () => {
                 // set time out
                 const correctContainer = document.querySelector(".container")
                 correctContainer.textContent = "CORRECT!"
+
             }
 
             const displayIncorrect = () => {
                 // set time out
                 const incorrectContainer = document.querySelector(".container")
                 incorrectContainer.textContent = "INCORRECT!"
+
+                // emptyOutContainer()
+                // endGame()
             }
 
             const nextQuestion = () => {
-            // need a way to indicate next
                 
-                const questionArray = [51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79];
+                const questionArray = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89 ,90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 
+                    110, 111, 112, 113, 114, 115, 116, 117, 118];                
                 let questionId = questionArray[Math.floor(Math.random()*questionArray.length)]
                 
             // clear out the HTML in the question and answer panels
@@ -48,7 +53,7 @@ const clickStartGame = () => {
                 const questionPanel = document.querySelector("#question-panel")
                 const h2 = document.createElement("h2")
 
-                h2.textContent = `Thank you for playing! See you next time, loser.`
+                h2.textContent = `Thanks for playing! See you next time, loser 🤡.`
 
                 h2.classList.add("h2-question")
                 questionPanel.innerHTML = ''
@@ -57,27 +62,44 @@ const clickStartGame = () => {
                 const answerPanel = document.querySelector("#answer-panel")
                 answerPanel.innerHTML = ''
 
-                const points = document.querySelector("#points")
-                points.textContent = ''
+                // const points = document.querySelector("#points")
+                // points.textContent = ''
 
                 const startGameButton = document.querySelector("#start-game")
                 startGameButton.textContent = `Start a new game`
             }
 
+            const resetPointsAfterLosing = () => {
+                let points = document.querySelector("#points")
+                points.textContent = 0
+            }
+
+
             const answerClicker = (question) => {
                 const answerPanel = document.querySelector("#answer-panel")
                 answerPanel.addEventListener("click", e => {
                     const button = e.target
+                    // console.log(`The answer is ${question.answer}`)
+                    // console.log(`These are wrong ${question.incorrect_answers}`)
+
+                    for (let i = 0; i < question.incorrect_answers.length; i++){
+                        if (question.incorrect_answers[i] === question.answer){
+                            question.incorrect_answers.splice(i, 1)
+                        }
+                    }
+                    // console.log(`These are wrong ${question.incorrect_answers}`)
+
                     if (button.textContent === question.answer){
                         const answerPanel = document.querySelector("#answer-panel")
                         answerPanel.innerHTML = ''
-                        displayCorrect()                       
-                        setTimeout(nextQuestion, 1000)  //this method will fetch a new question
                         increaseScore()
-                    } else {
+                        displayCorrect()  
+                        setTimeout(nextQuestion, 1000)  //this method will fetch a new question
+                    } else if (question.incorrect_answers.includes(button.textContent)){
                         displayIncorrect()
-                        // setTimeout(nextQuestion, 1000)
                         endGame()
+                        resetPointsAfterLosing()
+                        // increaseScore()
                     }
                 })
             }
@@ -101,7 +123,7 @@ const clickStartGame = () => {
                 totalAnswers.push(question.answer)
                 shuffle(totalAnswers)
                 answerPanel.innerHTML = ''
-                    // TO DO: implement shuffling in total answers
+
                 totalAnswers.forEach(answer => {
                     const answerButton = document.createElement("button") //for each string element in array, create a new button
                     answerButton.textContent = answer// the text content should be an answer
@@ -112,21 +134,6 @@ const clickStartGame = () => {
                 answerClicker(question)
             }
 
-            // const countDown = () => {
-                
-            //     // let interval = setInterval(function(){
-            //       let timer = document.getElementById('count').innerHTML=timer;
-            //       timer--;
-            //     //   console.log(timer)
-            //     if (timer === 0){
-            //         // clearInterval(interval);
-            //         document.getElementById('count').innerHTML='Done';
-            //         // or...
-            //         alert("You're out of time!");
-            //       }
-            //     // }, 1000);
-
-            // }
             
             const displayQuestion = (question) => {                
                 const questionPanel = document.querySelector("#question-panel")
@@ -138,14 +145,14 @@ const clickStartGame = () => {
                 questionPanel.append(h2)
 
                 displayAnswers(question)
-                // countDown()
+                // emptyOutContainer()                     
             }
             
             const increaseScore = () => {
                 let points = document.querySelector("#points")
                 let txtContent = points.textContent
                 
-                const pointsSpan = parseInt(txtContent)
+                let pointsSpan = parseInt(txtContent)
                 
                 const options = {
                     method: "PATCH",
@@ -153,11 +160,11 @@ const clickStartGame = () => {
                         "content-type": "application/json",
                         "accept": "application/json"
                     },
-                    body: JSON.stringify({score: pointsSpan + 5})
+                    body: JSON.stringify({score: pointsSpan += 5})
                 }
                 
 /* User should be able to see their score */
-                fetch(gameUrl + 7, options)
+                fetch(gameUrl + 8, options)
                 .then(response => response.json())
                 .then(data => {
                     points.textContent = data.score
@@ -166,7 +173,6 @@ const clickStartGame = () => {
         }    
     })
 }
-
 
 
 clickStartGame()

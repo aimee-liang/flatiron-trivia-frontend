@@ -24,19 +24,29 @@ body {
 }
 
 .container{
+    padding-top: 20px;
     text-align: center;
     font-family: 'Varela Round', sans-serif;
-    font-weight: 100px;
+    font-weight: 200px;
     block-size: 50px;
     display: flexbox;
+    font-size: x-large;
 }
 
+#points-div{
+    text-align: center;
+    margin: auto;
+    padding-bottom: 50px;
+    background:#f2d40f;
+    /* opacity: 0.4; */
+    width: 500px;
+    height: 20px;
+    font-family: 'Varela Round', sans-serif;
+
+}
 #points {
-    border-radius: 25px;
-    background: #ffffff;
-    width: 100px;
-    height: 50px;
-    opacity: 0.4;
+    font-weight: 100;
+    text-align: center;
 }
 
 #question-panel {
@@ -50,16 +60,24 @@ body {
     width: 500px;
     height: 250px;
     margin: auto;
+    text-align: center;
 }
 
 #answer-panel {
-    width: 400px;
-    height: 100px;
+    width: 600px;
+    height: 150px;
     padding-top: 50px;
     text-align: center;
     margin: auto;
     flex-direction: row;
     align-items: center;
+}
+
+#start-game-container {
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 30px;
 }
 
 #start-game {
@@ -78,14 +96,15 @@ body {
 }
 
 .answerBtn {
-    width: 100px;
+    width: 130px;
     height: 80px;
     text-align: center;
     background-color: #d6b222;
-    border-radius: 30px;
-    margin: auto;
+    border-radius: 25px;
+    margin: 5px;
     display: inline-block;
-    padding-top: 10px;
+    /* padding-top: 10px;
     padding-left: 10px;
+    padding-bottom: 10px; */
     font-family: 'Varela Round', sans-serif;
 }
